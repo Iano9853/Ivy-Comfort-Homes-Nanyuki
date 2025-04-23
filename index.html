@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -109,15 +110,156 @@
       cursor: pointer;
       color: #ff69b4;
     }
+
+    /* Assistant Styles */
+    .assistant-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: #ff69b4;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .assistant-button:hover {
+      transform: scale(1.1);
+    }
+
+    .assistant-panel {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 350px;
+      max-height: 500px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      z-index: 999;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .assistant-header {
+      padding: 15px;
+      background: #ff69b4;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .assistant-header h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .panel-close-btn {
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0 5px;
+    }
+
+    .chat-box {
+      flex-grow: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background: #f9f9f9;
+      max-height: 300px;
+    }
+
+    .input-container {
+      padding: 15px;
+      background: white;
+      border-top: 1px solid #eee;
+      display: flex;
+      gap: 10px;
+    }
+
+    .input-container input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .input-container button {
+      padding: 10px 15px;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .voice-btn {
+      background-color: #4CAF50 !important;
+    }
+
+    .voice-btn.listening {
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    
+    /* Added styles for chat messages */
+    .user-message {
+      background-color: #e6f7ff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin: 5px 0;
+      text-align: right;
+    }
+    
+    .assistant-message {
+      background-color: #ffe6f0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin: 5px 0;
+      text-align: left;
+    }
   </style>
 </head>
 <body>
+  <!-- Floating Assistant Button -->
+  <div id="assistantButton" class="assistant-button">
+    <span>💬</span>
+  </div>
+
+  <!-- Assistant Panel -->
+  <div id="assistantPanel" class="assistant-panel">
+    <div class="assistant-header">
+      <h3>Josphine AI Assistant</h3>
+      <span class="panel-close-btn" id="panelCloseBtn">×</span>
+    </div>
+    <div id="chatBox" class="chat-box"></div>
+    <div class="input-container">
+      <input type="text" id="userInput" placeholder="Ask me anything..." />
+      <button id="voiceBtn" class="voice-btn">🎤</button>
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+
   <header>
     <h1>Welcome to Ivy Comfort Homes</h1>
   </header>
   <p><b>©Josphine Techincal Company</b></p>
   <nav>
-    <select onchange="showSection(this.value)">
+    <select id="sectionSelector">
       <option value="">-- Select Section --</option>
       <option value="owner">Owner</option>
       <option value="gallery">Gallery</option>
@@ -127,27 +269,34 @@
     </select>
   </nav>
 
-  <section id="owner">
+  <section id="owner" class="active">
     <h2>Meet Ivy</h2>
-    <img src ="https://i.imgur.com/V8uCKGc.jpeg"/>
+    <img src="https://i.imgur.com/V8uCKGc.jpeg" alt="Ivy"/>
     <p><b>
-  Ivy is not just the founder of Ivy Homes—she's the heart behind it. With a warm smile and a deep passion for comfort, Ivy has created a space that feels like home away from home.<br> Every room reflects her love for detail, hospitality, and a desire to offer a restful, stylish, and secure stay for all her guests. </br>Choose Ivy Homes—not just for the comfort, but for the care behind it.
-    </p></b>
+      Ivy is not just the founder of Ivy Homes she is the heart and soul behind our cozy retreats. With vast knowledge and experience in hospitality, she's dedicated to creating spaces that feel like home.<br>One of the key promises that she assures her customers is the fact that once you stay at one of her homes',you will always feel to come back!</br>
+    </b></p>
+    <p>
+      Contact Ivy: <a href="mailto:ivymwangi75@gmail.com">ivy@ivyhomes.com</a> | Phone: +254795164236
+    </p>
   </section>
 
   <section id="gallery">
-    <h2>Gallery</h2>
-    <div>
-      <img src="https://i.imgur.com/f9dfCzF.jpeg" />
-      <img src="https://i.imgur.com/FEKWg49.jpeg" />
-      <img src="https://i.imgur.com/Rjz3s8F.jpeg" />
-      <img src="https://i.imgur.com/wY20THK.jpeg" />
-      <img src="https://i.imgur.com/tfxaES0.jpeg" />
-      <img src="https://i.imgur.com/YaXTtTP.jpeg" />
-      <video controls src="https://i.imgur.com/sdwUf0t.mp4"></video>
-      <video controls src="https://i.imgur.com/AnCnSis.mp4"></video>
+    <h2>Our Homes</h2>
+    <div class="gallery-grid">
+      <img src="https://i.imgur.com/5bkPF8A.jpeg" alt="Cozy Cabin" />
+      <img src="https://i.imgur.com/f3xl7dj.jpeg" alt="Modern Apartment" />
+      <img src="https://i.imgur.com/RpWOZZx.jpeg" alt="Beach House" />
+      <video controls>
+        <source src="https://i.imgur.com/edd47lw.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    <video controls>
+        <source src="https://i.imgur.com/OdEX2Ik.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
     </div>
   </section>
+  
 
   <section id="booking">
     <h2>Booking</h2>
@@ -163,10 +312,11 @@
     Send this information to ivymwangi75@gmail.com
   </b></p>
   </section>
+  
   <section id="payment">
     <h2>Payment</h2>
     <p>How would you like to pay?</p>
-    <select onchange="handlePayment(this.value)">
+    <select id="paymentMethod">
       <option value="">-- Select Payment Method --</option>
       <option value="bank">Bank</option>
       <option value="mpesa">M-Pesa</option>
@@ -179,53 +329,691 @@
       Click here to give your feedback via Google Forms
     </a></p>
   </section>
-
-  <!-- Modal -->
+  
   <div class="modal" id="paymentModal">
     <div class="modal-content">
-      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <span class="close-btn" id="modalCloseBtn">&times;</span>
       <h3 id="modalTitle">Payment Information</h3>
       <p id="modalContent">Insert your payment details here...</p>
     </div>
   </div>
 
   <script>
-    function showSection(id) {
-      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
-      if (id) document.getElementById(id).classList.add('active');
+    // DOM Elements
+    const sectionSelector = document.getElementById('sectionSelector');
+    const sections = document.querySelectorAll('section');
+    const paymentMethod = document.getElementById('paymentMethod');
+    const paymentModal = document.getElementById('paymentModal');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    
+    // Assistant elements
+    const assistantButton = document.getElementById('assistantButton');
+    const assistantPanel = document.getElementById('assistantPanel');
+    const panelCloseBtn = document.getElementById('panelCloseBtn');
+    const chatBox = document.getElementById('chatBox');
+    const userInput = document.getElementById('userInput');
+    const voiceBtn = document.getElementById('voiceBtn');
+    const sendBtn = document.getElementById('sendBtn');
+    
+    // Show section based on selection
+    function showSection(sectionId) {
+      sections.forEach(section => {
+        section.classList.remove('active');
+        if (section.id === sectionId) {
+          section.classList.add('active');
+        }
+      });
     }
-
-    function sendBooking(e) {
-      e.preventDefault();
-      alert('Booking info would be sent to ivymwangi75@gmail.com');
-    }
-
+    
+    // Handle payment method selection
     function handlePayment(method) {
-      const modal = document.getElementById('paymentModal');
-      const title = document.getElementById('modalTitle');
-      const content = document.getElementById('modalContent');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalContent = document.getElementById('modalContent');
 
       if (method === 'mpesa') {
-        title.textContent = 'M-Pesa Payment Information';
-        content.innerHTML = 'Send money to phone number <br>+254795164236 </br><br>  or paybill number 542542 account number 03506068446150</br>and contact +254795164236 to confirm payment and booking details.<br>Thankyou</br>';
+        modalTitle.textContent = 'M-Pesa Payment Information';
+        modalContent.innerHTML = 'Send money to phone number <br>+254795164236 </br><br>  or paybill number 542542 account number 03506068446150</br>and contact +254795164236 to confirm payment and booking details.<br>Thankyou</br>';
       } else if (method === 'bank') {
-        title.textContent = 'Bank Payment Information';
-        content.innerHTML = 'pay via account number 03506068446150<br>And contact +254795164236 for payment confirmationn.</br>';
+        modalTitle.textContent = 'Bank Payment Information';
+        modalContent.innerHTML = 'pay via account number 03506068446150<br>And contact +254795164236 for payment confirmationn.</br>';
       }
 
-      modal.classList.add('show');
+      paymentModal.classList.add('show');
     }
-
+    
+    // Close modal
     function closeModal() {
-      document.getElementById('paymentModal').classList.remove('show');
+      paymentModal.classList.remove('show');
     }
 
-    window.onclick = function(event) {
-      const modal = document.getElementById('paymentModal');
-      if (event.target === modal) {
+    // Toggle chat panel
+    function toggleChatPanel() {
+      if (assistantPanel.style.display === 'flex') {
+        assistantPanel.style.display = 'none';
+      } else {
+        assistantPanel.style.display = 'flex';
+        // Scroll to bottom of chat
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+    }
+    
+    // Add message to chat
+    function addMessageToChat(sender, message) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = sender === 'user' ? 'user-message' : 'assistant-message';
+      messageDiv.innerHTML = `<b>${sender === 'user' ? 'You' : 'Josphine'}:</b> ${message}`;
+      chatBox.appendChild(messageDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    
+    // Generate AI response
+    function generateResponse(message) {
+      const lowerMsg = message.toLowerCase();
+      
+      if (lowerMsg.includes('hello') || lowerMsg.includes('hi')) {
+        return "Hello there! How can I help you with Ivy Homes today?";
+      } else if (lowerMsg.includes('booking') || lowerMsg.includes('book')) {
+        return "You can make a booking in the 'Booking' section. Would you like me to take you there?";
+      } else if (lowerMsg.includes('price') || lowerMsg.includes('cost')) {
+        return "Can you imagine that all rooms go for a price of ksh.4000 only!How awesome is that.No matter what time of the season we will never shift our prices.<br><b>So what are you waiting for?Pack your bags and let us take care of you</b></br>";
+      } else if (lowerMsg.includes('contact') || lowerMsg.includes('reach')) {
+        return "You can contact Ivy directly at ivymwangi75@gmail.com or call +254795164236.<br>I hope to see you soon!";
+      }else if (lowerMsg.includes('location') || lowerMsg.includes('where can I find')){
+        return "Ivy Comfort homes is located in Nanyuki,Laikipia County";
+      } else if (lowerMsg.includes('payment') || lowerMsg.includes('pay')) {
+        return "Payment options are available in the 'Payment' section. We accept bank transfers and M-Pesa.";
+      } else {
+        return "I'm happy to help with any questions about Ivy Homes! For specific inquiries, please check our website sections or contact Ivy directly.";
+      }
+    }
+    
+    // Send message to assistant
+    function sendToJosphine() {
+      const message = userInput.value.trim();
+      if (message) {
+        addMessageToChat('user', message);
+        userInput.value = '';
+        
+        // Simulate AI response
+        setTimeout(() => {
+          const response = generateResponse(message);
+          addMessageToChat('assistant', response);
+        }, 1000);
+      }
+    }
+    
+    // Toggle voice input
+    let isListening = false;
+    function toggleVoiceInput() {
+      if (!isListening) {
+        // Start voice recognition
+        isListening = true;
+        voiceBtn.classList.add('listening');
+        alert("Voice recognition started. Speak now...");
+        // In a real implementation, you would use the Web Speech API here
+        // For demo purposes, we'll simulate voice input after 2 seconds
+        setTimeout(() => {
+          const sampleQuestions = [
+            "How much does the beach house cost?",
+            "I want to make a booking",
+            "How can I contact Ivy?"
+          ];
+          const randomQuestion = sampleQuestions[Math.floor(Math.random() * sampleQuestions.length)];
+          userInput.value = randomQuestion;
+          isListening = false;
+          voiceBtn.classList.remove('listening');
+        }, 2000);
+      } else {
+        // Stop voice recognition
+        isListening = false;
+        voiceBtn.classList.remove('listening');
+        alert("Voice recognition stopped");
+      }
+    }
+
+    // Event Listeners
+    sectionSelector.addEventListener('change', (e) => showSection(e.target.value));
+    paymentMethod.addEventListener('change', (e) => handlePayment(e.target.value));
+    modalCloseBtn.addEventListener('click', closeModal);
+    
+    // Assistant event listeners
+    assistantButton.addEventListener('click', toggleChatPanel);
+    panelCloseBtn.addEventListener('click', toggleChatPanel);
+    sendBtn.addEventListener('click', sendToJosphine);
+    userInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendToJosphine();
+      }
+    });
+    voiceBtn.addEventListener('click', toggleVoiceInput);
+
+    // Initialize with welcome message
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        addMessageToChat('assistant', "Hi there! I'm Josphine, your Ivy Homes assistant. How can I help you today?");
+      }, 1000);
+      
+      // Show owner section by default
+      document.getElementById('owner').classList.add('active');
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+      if (event.target === paymentModal) {
         closeModal();
       }
-    };
+    });
   </script>
 </body>
 </html>
+```
+
+      
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ivy Homes</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #ffe6f0, #e6f7ff);
+      color: #333;
+    }
+    header {
+      background-color: #ff69b4;
+      padding: 1rem;
+      color: white;
+      text-align: center;
+    }
+    nav {
+      text-align: center;
+      margin: 1rem 0;
+    }
+    nav select {
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    section {
+      display: none;
+      padding: 1rem;
+      background-color: white;
+      margin: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .active {
+      display: block;
+    }
+    img, video {
+      width: 100%;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin: 0.5rem 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 0.5rem;
+      text-align: center;
+    }
+    form input, form select, form textarea, form button {
+      display: block;
+      width: 100%;
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    form button {
+      background-color: #ff69b4;
+      color: white;
+      font-weight: bold;
+    }
+
+    /* Modal Styling */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index: 999;
+    }
+    .modal.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-content {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 500px;
+      width: 90%;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    .modal.show .modal-content {
+      transform: scale(1);
+    }
+    .close-btn {
+      float: right;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #ff69b4;
+    }
+
+    /* Assistant Styles */
+    .assistant-button {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: #ff69b4;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .assistant-button:hover {
+      transform: scale(1.1);
+    }
+
+    .assistant-panel {
+      position: fixed;
+      bottom: 100px;
+      right: 30px;
+      width: 350px;
+      max-height: 500px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+      z-index: 999;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .assistant-header {
+      padding: 15px;
+      background: #ff69b4;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .assistant-header h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .panel-close-btn {
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0 5px;
+    }
+
+    .chat-box {
+      flex-grow: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background: #f9f9f9;
+      max-height: 300px;
+    }
+
+    .input-container {
+      padding: 15px;
+      background: white;
+      border-top: 1px solid #eee;
+      display: flex;
+      gap: 10px;
+    }
+
+    .input-container input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+
+    .input-container button {
+      padding: 10px 15px;
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .voice-btn {
+      background-color: #4CAF50 !important;
+    }
+
+    .voice-btn.listening {
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    
+    /* Added styles for chat messages */
+    .user-message {
+      background-color: #e6f7ff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin: 5px 0;
+      text-align: right;
+    }
+    
+    .assistant-message {
+      background-color: #ffe6f0;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin: 5px 0;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Assistant Button -->
+  <div id="assistantButton" class="assistant-button">
+    <span>💬</span>
+  </div>
+
+  <!-- Assistant Panel -->
+  <div id="assistantPanel" class="assistant-panel">
+    <div class="assistant-header">
+      <h3>Josphine AI Assistant</h3>
+      <span class="panel-close-btn" id="panelCloseBtn">×</span>
+    </div>
+    <div id="chatBox" class="chat-box"></div>
+    <div class="input-container">
+      <input type="text" id="userInput" placeholder="Ask me anything..." />
+      <button id="voiceBtn" class="voice-btn">🎤</button>
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+
+  <header>
+    <h1>Welcome to Ivy Comfort Homes</h1>
+  </header>
+  <p><b>©Josphine Techincal Company</b></p>
+  <nav>
+    <select id="sectionSelector">
+      <option value="">-- Select Section --</option>
+      <option value="owner">Owner</option>
+      <option value="gallery">Gallery</option>
+      <option value="booking">Booking</option>
+      <option value="payment">Payment</option>
+      <option value="feedback">Feedback</option>
+    </select>
+  </nav>
+
+  <section id="owner" class="active">
+    <h2>Meet Ivy</h2>
+    <img src="https://i.imgur.com/V8uCKGc.jpeg" alt="Ivy"/>
+    <p><b>
+      Ivy is not just the founder of Ivy Homes she is the heart and soul behind our cozy retreats. With vast knowledge and experience in hospitality, she's dedicated to creating spaces that feel like home.<br>One of the key promises that she assures her customers is the fact that once you stay at one of her homes',you will always feel to come back!</br>
+    </b></p>
+    <p>
+      Contact Ivy: <a href="mailto:ivymwangi75@gmail.com">ivy@ivyhomes.com</a> | Phone: +254795164236
+    </p>
+  </section>
+
+  <section id="gallery">
+    <h2>Our Homes</h2>
+    <div class="gallery-grid">
+      <img src="https://i.imgur.com/5bkPF8A.jpeg" alt="Cozy Cabin" />
+      <img src="https://i.imgur.com/f3xl7dj.jpeg" alt="Modern Apartment" />
+      <img src="https://i.imgur.com/RpWOZZx.jpeg" alt="Beach House" />
+      <video controls>
+        <source src="https://i.imgur.com/edd47lw.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    <video controls>
+        <source src="https://i.imgur.com/OdEX2Ik.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+  
+
+  <section id="booking">
+    <h2>Booking</h2>
+    <p><b>Can you just imagine the majestic and luxurious rooms only go for a price of ksh.4000.<br>To book a room please send an email of:
+    <ol>
+      <li>Name</li>
+      <li>Phone number</li>
+      <li>Email</li>
+      <li>room you want to book</li>
+      <li>number of nights you want to stay</li>
+      <li>Emergency contact</li>
+    </ol>
+    Send this information to ivymwangi75@gmail.com
+  </b></p>
+  </section>
+  
+  <section id="payment">
+    <h2>Payment</h2>
+    <p>How would you like to pay?</p>
+    <select id="paymentMethod">
+      <option value="">-- Select Payment Method --</option>
+      <option value="bank">Bank</option>
+      <option value="mpesa">M-Pesa</option>
+    </select>
+  </section>
+
+  <section id="feedback">
+    <h2>Feedback</h2>
+    <p><a href="https://forms.gle/XtMuAE7fr9QEX4Ag7" target="_blank">
+      Click here to give your feedback via Google Forms
+    </a></p>
+  </section>
+  
+  <div class="modal" id="paymentModal">
+    <div class="modal-content">
+      <span class="close-btn" id="modalCloseBtn">&times;</span>
+      <h3 id="modalTitle">Payment Information</h3>
+      <p id="modalContent">Insert your payment details here...</p>
+    </div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const sectionSelector = document.getElementById('sectionSelector');
+    const sections = document.querySelectorAll('section');
+    const paymentMethod = document.getElementById('paymentMethod');
+    const paymentModal = document.getElementById('paymentModal');
+    const modalCloseBtn = document.getElementById('modalCloseBtn');
+    
+    // Assistant elements
+    const assistantButton = document.getElementById('assistantButton');
+    const assistantPanel = document.getElementById('assistantPanel');
+    const panelCloseBtn = document.getElementById('panelCloseBtn');
+    const chatBox = document.getElementById('chatBox');
+    const userInput = document.getElementById('userInput');
+    const voiceBtn = document.getElementById('voiceBtn');
+    const sendBtn = document.getElementById('sendBtn');
+    
+    // Show section based on selection
+    function showSection(sectionId) {
+      sections.forEach(section => {
+        section.classList.remove('active');
+        if (section.id === sectionId) {
+          section.classList.add('active');
+        }
+      });
+    }
+    
+    // Handle payment method selection
+    function handlePayment(method) {
+      const modalTitle = document.getElementById('modalTitle');
+      const modalContent = document.getElementById('modalContent');
+
+      if (method === 'mpesa') {
+        modalTitle.textContent = 'M-Pesa Payment Information';
+        modalContent.innerHTML = 'Send money to phone number <br>+254795164236 </br><br>  or paybill number 542542 account number 03506068446150</br>and contact +254795164236 to confirm payment and booking details.<br>Thankyou</br>';
+      } else if (method === 'bank') {
+        modalTitle.textContent = 'Bank Payment Information';
+        modalContent.innerHTML = 'pay via account number 03506068446150<br>And contact +254795164236 for payment confirmationn.</br>';
+      }
+
+      paymentModal.classList.add('show');
+    }
+    
+    // Close modal
+    function closeModal() {
+      paymentModal.classList.remove('show');
+    }
+
+    // Toggle chat panel
+    function toggleChatPanel() {
+      if (assistantPanel.style.display === 'flex') {
+        assistantPanel.style.display = 'none';
+      } else {
+        assistantPanel.style.display = 'flex';
+        // Scroll to bottom of chat
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+    }
+    
+    // Add message to chat
+    function addMessageToChat(sender, message) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = sender === 'user' ? 'user-message' : 'assistant-message';
+      messageDiv.innerHTML = `<b>${sender === 'user' ? 'You' : 'Josphine'}:</b> ${message}`;
+      chatBox.appendChild(messageDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    
+    // Generate AI response
+    function generateResponse(message) {
+      const lowerMsg = message.toLowerCase();
+      
+      if (lowerMsg.includes('hello') || lowerMsg.includes('hi')) {
+        return "Hello there! How can I help you with Ivy Homes today?";
+      } else if (lowerMsg.includes('booking') || lowerMsg.includes('book')) {
+        return "You can make a booking in the 'Booking' section. Would you like me to take you there?";
+      } else if (lowerMsg.includes('price') || lowerMsg.includes('cost')) {
+        return "Can you imagine that all rooms go for a price of ksh.4000 only!How awesome is that.No matter what time of the season we will never shift our prices.<br><b>So what are you waiting for?Pack your bags and let us take care of you</b></br>";
+      } else if (lowerMsg.includes('contact') || lowerMsg.includes('reach')) {
+        return "You can contact Ivy directly at ivymwangi75@gmail.com or call +254795164236.<br>I hope to see you soon!";
+      }else if (lowerMsg.includes('location') || lowerMsg.includes('where can I find')){
+        return "Ivy Comfort homes is located in Nanyuki,Laikipia County";
+      } else if (lowerMsg.includes('payment') || lowerMsg.includes('pay')) {
+        return "Payment options are available in the 'Payment' section. We accept bank transfers and M-Pesa.";
+      } else {
+        return "I'm happy to help with any questions about Ivy Homes! For specific inquiries, please check our website sections or contact Ivy directly.";
+      }
+    }
+    
+    // Send message to assistant
+    function sendToJosphine() {
+      const message = userInput.value.trim();
+      if (message) {
+        addMessageToChat('user', message);
+        userInput.value = '';
+        
+        // Simulate AI response
+        setTimeout(() => {
+          const response = generateResponse(message);
+          addMessageToChat('assistant', response);
+        }, 1000);
+      }
+    }
+    
+    // Toggle voice input
+    let isListening = false;
+    function toggleVoiceInput() {
+      if (!isListening) {
+        // Start voice recognition
+        isListening = true;
+        voiceBtn.classList.add('listening');
+        alert("Voice recognition started. Speak now...");
+        // In a real implementation, you would use the Web Speech API here
+        // For demo purposes, we'll simulate voice input after 2 seconds
+        setTimeout(() => {
+          const sampleQuestions = [
+            "How much does the beach house cost?",
+            "I want to make a booking",
+            "How can I contact Ivy?"
+          ];
+          const randomQuestion = sampleQuestions[Math.floor(Math.random() * sampleQuestions.length)];
+          userInput.value = randomQuestion;
+          isListening = false;
+          voiceBtn.classList.remove('listening');
+        }, 2000);
+      } else {
+        // Stop voice recognition
+        isListening = false;
+        voiceBtn.classList.remove('listening');
+        alert("Voice recognition stopped");
+      }
+    }
+
+    // Event Listeners
+    sectionSelector.addEventListener('change', (e) => showSection(e.target.value));
+    paymentMethod.addEventListener('change', (e) => handlePayment(e.target.value));
+    modalCloseBtn.addEventListener('click', closeModal);
+    
+    // Assistant event listeners
+    assistantButton.addEventListener('click', toggleChatPanel);
+    panelCloseBtn.addEventListener('click', toggleChatPanel);
+    sendBtn.addEventListener('click', sendToJosphine);
+    userInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        sendToJosphine();
+      }
+    });
+    voiceBtn.addEventListener('click', toggleVoiceInput);
+
+    // Initialize with welcome message
+    window.addEventListener('load', function() {
+      setTimeout(() => {
+        addMessageToChat('assistant', "Hi there! I'm Josphine, your Ivy Homes assistant. How can I help you today?");
+      }, 1000);
+      
+      // Show owner section by default
+      document.getElementById('owner').classList.add('active');
+    });
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+      if (event.target === paymentModal) {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>
+```
